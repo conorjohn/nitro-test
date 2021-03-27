@@ -1,0 +1,1 @@
+export type IGroupOptions = 'location' | 'author' | 'week';

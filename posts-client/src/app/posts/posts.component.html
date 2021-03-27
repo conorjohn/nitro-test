@@ -1,0 +1,20 @@
+<div class="container posts">
+    <h2>Posts</h2>
+    <form [formGroup]="filterForm">
+        <label for="filterBy">Group by: </label>
+        <select formControlName="filterBy" #filterBy name="filterBy" id="filterBy">
+            <option disabled value="">Please select</option>
+            <option *ngFor="let option of filterOptions" [value]="option">{{ option | titlecase }}</option>
+        </select>
+    </form>
+    <ul>
+        <li *ngFor="let group of posts | keyvalue">
+            <h2>Posts from<span *ngIf="filterBy.value == 'week'"> week</span>: {{group.key}}</h2>
+            <ul>
+                <li *ngFor="let item of group.value">
+                    <app-post [post]="item"></app-post>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

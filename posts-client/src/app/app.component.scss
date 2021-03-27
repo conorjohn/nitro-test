@@ -1,0 +1,25 @@
+.top-bar {
+    color: #fff;
+    background: #0b6f7b;
+    z-index: 1005;
+    height: 96px;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    background: url(https://s3.amazonaws.com/cf-nitroengassets-prod/express/_global/logos/nitro-logo-orange-white.svg) 0
+        50% no-repeat;
+    /* left: 2rem; */
+    padding: 0;
+    position: relative;
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    height: 32px;
+    width: 76px;
+}
