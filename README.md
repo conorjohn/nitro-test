@@ -43,8 +43,10 @@ Navigate to the Angular app and run
 
 ## Package Versions
 
-Name | Description | Type | Auth | Link |
------------- | ------------- | ------------- | ------------- | ------------- |
+Package | Version | 
+------------ | ------------- | 
+@angular-devkit/architect | 0.1102.6 |
+@angular-devkit/build-angular | 0.1102.6 |
 Climate Data Crawler | x | NPM Package | N/A | [Click Here](https://www.npmjs.com/package/climate-data-crawler) |
 Weather API | x | JSON | ? | [Click Here](https://www.wunderground.com/weather/api/d/docs) |
 
