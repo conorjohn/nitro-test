@@ -6,7 +6,6 @@ import { environment as env } from 'src/environments/environment';
 import * as moment from 'moment';
 import { IGroupOptions } from '../types/group-options.type';
 import { IPost } from '../types/post.interface';
-// import {  } from 'lodash';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +14,7 @@ export class PostsService {
 
     constructor(private _http: HttpClient) { }
 
-    private _filterOptions: Array<IGroupOptions> = ['author', 'location', 'week'];
+    private _groupOptions: Array<IGroupOptions> = ['author', 'location', 'week'];
     public posts$: BehaviorSubject<IPost[]> = new BehaviorSubject<IPost[]>([])
     public posts: Array<IPost> = [];
 
@@ -24,20 +23,20 @@ export class PostsService {
 
         return this._http.get<Array<IPost>>(env.baseUrl + '/posts', { headers: headers }).pipe(
             map((posts: IPost[]) => {
-                posts.map(post => post.week = moment(+post.time).isoWeek());
+                // I wasn't sure what else was meant by Week, would be good to know if I was far off the mark using ISO
+                posts.map(post => post.week = moment.unix(+post.time).isoWeek());
                 return posts;
             })
         );
     }
-
     
     setPosts(posts: Array<IPost>): void {
         this.posts = posts;
         this.posts$.next(posts);
     }
 
-    getFilterOptions(): Array<IGroupOptions> {
-        return this._filterOptions;
+    getGroupOptions(): Array<IGroupOptions> {
+        return this._groupOptions;
     }
 
     updatePost(post: IPost): void {

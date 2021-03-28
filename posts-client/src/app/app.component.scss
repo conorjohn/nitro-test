@@ -1,8 +1,9 @@
+@import '../scss/variables';
+
 .top-bar {
     color: #fff;
-    background: #0b6f7b;
-    z-index: 1005;
-    height: 96px;
+    background: $brandColor;
+    height: 9rem;
     padding: 0 2rem;
     display: flex;
     flex-direction: row;

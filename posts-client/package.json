@@ -7,7 +7,7 @@
     "build": "ng build",
     "deploy:win": "del ..\\public && xcopy /E /I .\\dist\\posts-client ..\\public\\",
     "build:deploy:win": "ng build --prod && npm run deploy:win",
-    "build:deploy:unix": "ng build --prod && rm -f ../public/* && cp dist/* ../public/",
+    "build:deploy:bash": "ng build --prod && rm -f ../public/* && cp dist/posts-client/* ../public/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

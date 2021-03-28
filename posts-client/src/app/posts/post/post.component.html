@@ -5,23 +5,31 @@
         {{post.location}}, Posted on: {{post.time | momentDate}}
     </small>
     
-    <!-- [formGroup]="postForm" -->
-    <form (ngSubmit)="updatePost()">
+    <form #postForm="ngForm" (ngSubmit)="updatePost()">
         <div class="form-group">
             <label for="author">Author: </label>
-            <input [(ngModel)]="post.author" name="author" type="text" id="author">
+            <input [(ngModel)]="post.author" #author="ngModel" name="author" type="text" id="author" required>
+            <span class="error" *ngIf="(author.touched || postForm.submitted) && author.errors?.required">
+                Author's name is required
+            </span>
         </div>
         
         <div class="form-group">
             <label for="text">Text: </label>
-            <input [(ngModel)]="post.text" id="text" name="text" type="text">
+            <textarea [(ngModel)]="post.text" #text="ngModel" id="text" name="text" type="text" rows="4" cols="50" required></textarea>
+            <span class="error" *ngIf="(text.touched || postForm.submitted) && text.errors?.required">
+                Text is required for this post
+            </span>
         </div>
     
         <div class="form-group">
             <label for="location">Location: </label>
-            <input [(ngModel)]="post.location" id="location" name="location" type="text">
+            <input [(ngModel)]="post.location" #location="ngModel" id="location" name="location" type="text" required>
+            <span class="error" *ngIf="(location.touched || postForm.submitted) && location.errors?.required">
+                A location is required
+            </span>
         </div>
     
-        <button (click)="updatePost()" type="submit">Update</button>
+        <button (click)="updatePost()" class="btn-submit" type="submit">Update</button>
     </form>
 </div>

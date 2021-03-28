@@ -15,7 +15,7 @@ import { IGroupedPosts } from '../types/grouped-posts.interface';
 export class PostsComponent extends BaseComponent implements OnInit, OnDestroy {
     public posts: IGroupedPosts;
     public defaultOption: IGroupOptions = 'author';
-    public filterOptions: Array<IGroupOptions> = [];
+    public groupOptions: Array<IGroupOptions> = [];
 
     public filterForm: FormGroup = new FormGroup({
         filterBy: new FormControl(this.defaultOption)
@@ -26,7 +26,7 @@ export class PostsComponent extends BaseComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.filterOptions = this._postService.getFilterOptions();
+        this.groupOptions = this._postService.getGroupOptions();
         this.getPosts();
         this.subscribeToFormChanges();
         this.subscribeToPosts();
@@ -36,7 +36,7 @@ export class PostsComponent extends BaseComponent implements OnInit, OnDestroy {
         let sub = this._postService.getPosts()
             .subscribe((res: Array<IPost>) => {
                 this._postService.setPosts(res);
-                this.filterBy(this.filterOptions[0], res);
+                this.filterBy(this.groupOptions[0], res);
             });
 
         this.addSubscriptions(sub);
@@ -60,24 +60,26 @@ export class PostsComponent extends BaseComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * The base logic behind the sorting and grouping, each sort needs to be passed through here
+     * It accepts both the Form selection and the flat Array of posts
      * 
-     * @param filterOption 
+     * @param groupOption 
      * @param posts 
      */
-    filterBy(filterOption: IGroupOptions, posts: Array<IPost>): void {
+    filterBy(groupOption: IGroupOptions, posts: Array<IPost>): void {
         // Allows me to access an interface's property using a string variable, 
         // Which Typescript doesnt allow for otherwise
         const getKeyValue = <T extends object, U extends keyof T>(obj: T) => (key: U) => obj[key];
 
         // Get a list of the unique values in the property we are filtering by
-        let types = _.uniqBy(posts, filterOption).map((x: any) => x[filterOption]);
+        let types = _.uniqBy(posts, groupOption).map((x: any) => x[groupOption]);
 
         let composedObj: any = new Object();
 
         // Loop over the types, create an array of posts that are from the same week | author | location
         // assign this array to the object we are composing
         types.forEach((type) => {
-            let filteredPosts = posts.filter(post => type === getKeyValue(post)(filterOption));
+            let filteredPosts = posts.filter(post => type === getKeyValue(post)(groupOption));
             Object.assign(composedObj, { [type]: filteredPosts });
         })
 
@@ -85,16 +87,16 @@ export class PostsComponent extends BaseComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * 
+     * Passing the form input to inform what we are grouping by
      * @param formInput 
      */
     groupBy(formInput: IGroupOptions) {
-        // get a fresh instance of the posts
+        // Get a fresh instance of the posts from the service
         this.filterBy(formInput, this._postService.posts)
     }
 
     /**
-     * passing 
+     * Receiving the posts from our subscription to the Posts$ Observable
      * @param posts 
      */
     updateGroupedPosts(posts: IPost[]): void {
