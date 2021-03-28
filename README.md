@@ -9,7 +9,7 @@ My local Versions are currently
 If you want to deploy and serve the compiled Angular app, complete the Client Setup first, or just note that you will have to kill and restart the Node server once the Anuglar app has been deployed.
 
 ## Client Setup
-Navigate to nitro > posts-client
+Navigate to nitro-test > posts-client
 
 Run 
 > npm install
@@ -23,13 +23,14 @@ Or this for Bash
 
 This will compile and deploy the angular app to a public folder for the Node server to present.
 If for what ever reason the deploy commands aren't working for you, you can always run the Angular App using:
-> $ nitro/posts-client> npm run start | ng serve
+> $ nitro-test/posts-client> npm run start | ng serve
 
 The CORS issue was taken care of for the purposes of developement.
 
 ## Server setup
 Navigate to the top level of the project setup and run
 > npm install
+
 > node index.js
 
 Expected result is
