@@ -12,7 +12,6 @@ export abstract class BaseComponent implements OnDestroy, OnInit {
     }
 
     unsubscribeAll() {
-        console.log('unsubscribing')
         this._subscriptions.forEach(sub => {
             this.removeSubscription(sub);
         })
